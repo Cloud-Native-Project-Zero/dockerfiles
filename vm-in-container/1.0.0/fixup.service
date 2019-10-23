@@ -1,0 +1,13 @@
+[Unit]
+Description=Early Fixup
+DefaultDependencies=no
+After=sysinit.target local-fs.target
+Before=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'if [ ! -e /etc/libvirt/qemu.config ]; then cp -af /etc/libvirt.org/* /etc/libvirt/; fi'
+ExecStart=/bin/sh -c 'mount -t sysfs -o remount,rw sysfs /sys '
+
+[Install]
+WantedBy=multi-user.target

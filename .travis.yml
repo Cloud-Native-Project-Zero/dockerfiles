@@ -1,0 +1,16 @@
+sudo: required
+
+services:
+  - docker
+
+env:
+  - DOCKERFILE_DIR=vm-in-container/1.0.0
+
+script:
+  - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+  - IMG_NAME=`echo $DOCKERFILE_DIR | awk -F/ '{ print $1 }'`
+  - IMG_TAG=`echo $DOCKERFILE_DIR | awk -F/ '{ print $2 }'`
+  - cd $DOCKERFILE_DIR
+  - docker build -t cnpz/$IMG_NAME:$IMG_TAG .
+  - docker push cnpz/$IMG_NAME:$IMG_TAG
+  - cd ../..
