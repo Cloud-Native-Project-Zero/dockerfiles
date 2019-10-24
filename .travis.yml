@@ -4,6 +4,7 @@ services:
   - docker
 
 env:
+  - DOCKERFILE_DIR=stx-build/2.0.0
   - DOCKERFILE_DIR=vm-in-container/1.0.0
 
 script:
